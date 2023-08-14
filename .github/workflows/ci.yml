@@ -27,7 +27,6 @@ jobs:
       - name: Run clippy
         uses: clechasseur/rs-clippy-check@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           args: --all-targets --all-features -- -D warnings
 
   build:
