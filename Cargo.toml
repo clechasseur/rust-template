@@ -1,0 +1,9 @@
+[package]
+name = "rust-template-output"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+test_feature_1 = []
+
+[dependencies]
