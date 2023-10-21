@@ -24,8 +24,22 @@ test toolchain=default_toolchain:
 tarpaulin toolchain=default_toolchain:
     cargo {{toolchain}} tarpaulin --target-dir target-tarpaulin
 
+pre-msrv:
+    mv Cargo.toml Cargo.toml.bak
+    mv Cargo.lock Cargo.lock.bak
+    mv Cargo.toml.msrv Cargo.toml
+    mv Cargo.lock.msrv Cargo.lock
+
+post-msrv:
+    mv Cargo.toml Cargo.toml.msrv
+    mv Cargo.lock Cargo.lock.msrv
+    mv Cargo.toml.bak Cargo.toml
+    mv Cargo.lock.bak Cargo.lock
+
 msrv:
+    {{ if path_exists("Cargo.lock.msrv") == "true" { `just pre-msrv` } else { ` ` } }}
     cargo msrv -- just check
+    {{ if path_exists("Cargo.lock.bak") == "true" { `just post-msrv` } else { ` ` } }}
 
 doc:
     cargo +nightly doc --workspace --all-features --open
