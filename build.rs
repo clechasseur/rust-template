@@ -7,7 +7,7 @@ fn main() {
     println!("cargo:rerun-if-env-changed=CI");
 
     // Uncomment this to be notified when we're building on Nightly toolset
-    // if version_meta().unwrap().channel == Nightly {
+    // if version_meta().unwrap().channel <= Nightly {
     //     println!("cargo:rustc-cfg=nightly_rustc");
     // }
 
