@@ -25,7 +25,7 @@ tarpaulin toolchain=default_toolchain:
     cargo {{toolchain}} tarpaulin --target-dir target-tarpaulin
 
 msrv:
-    cargo msrv -- cargo check --workspace --all-targets
+    cargo msrv -- just check
 
 doc:
     cargo +nightly doc --workspace --all-features --open
