@@ -72,23 +72,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # TODO enable this if you have MSRV cargo files in your repo
-      # - name: Install MSRV cargo files
-      #   run: |
-      #     rm Cargo.toml
-      #     rm Cargo.lock
-      #     mv Cargo.toml.msrv Cargo.toml
-      #     mv Cargo.lock.msrv Cargo.lock
-
       - name: Install Rust toolchain ${{ matrix.toolchain }}
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
 
+      - name: Install just
+        uses: extractions/setup-just@v1
+
       - name: Output Rust toolchain info
         run: |
           cargo --version --verbose
           rustc --version
+
+      - name: Check if we need to install MSRV cargo files
+        id: check_msrv_cargo_files
+        uses: andstor/file-existence-action@v2
+        with:
+          files: "Cargo.lock.msrv, Cargo.toml.msrv"
+
+      - name: Install MSRV cargo files
+        if: ${{ steps.check_msrv_cargo_files.outputs.files_exists == 'true' }}
+        run: just pre-msrv
 
       - name: Run checks
         uses: clechasseur/rs-cargo@v2
