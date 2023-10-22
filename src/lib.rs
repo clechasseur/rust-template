@@ -3,8 +3,8 @@
 /// ```
 /// use rust_template_output::hello;
 ///
-/// let foo = hello();
-/// assert!(!foo.is_empty());
+/// let hello_str = hello();
+/// assert!(!hello_str.is_empty());
 /// ```
 pub fn hello() -> &'static str {
     "Hello, World!"
@@ -15,8 +15,8 @@ pub fn hello() -> &'static str {
 /// ```
 /// use rust_template_output::for_feature;
 ///
-/// let foo = for_feature();
-/// assert!(!foo.is_empty());
+/// let feature_str = for_feature();
+/// assert!(!feature_str.is_empty());
 /// ```
 #[cfg(feature = "test_feature_1")]
 pub fn for_feature() -> &'static str {
