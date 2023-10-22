@@ -13,10 +13,10 @@ fmt:
     cargo +nightly fmt --all
 
 check toolchain=default_toolchain:
-    cargo {{toolchain}} check --workspace --all-features
+    cargo {{toolchain}} check --workspace --all-targets --all-features
 
 build toolchain=default_toolchain:
-    cargo {{toolchain}} build --workspace --all-features
+    cargo {{toolchain}} build --workspace --all-targets --all-features
 
 test toolchain=default_toolchain:
     cargo {{toolchain}} test --workspace --all-features

@@ -34,7 +34,7 @@ jobs:
       - name: Run clippy
         uses: clechasseur/rs-clippy-check@v3
         with:
-          args: --workspace ${{ matrix.all-features && '--all-features' || '' }} -- -D warnings
+          args: --workspace --all-targets ${{ matrix.all-features && '--all-features' || '' }} -- -D warnings
 
   format:
     name: Rustfmt check
@@ -99,7 +99,7 @@ jobs:
         uses: clechasseur/rs-cargo@v2
         with:
           command: check
-          args: --workspace --lib ${{ matrix.all-features && '--all-features' || '' }}
+          args: --workspace --lib --bins ${{ matrix.all-features && '--all-features' || '' }}
 
   build:
     name: Release build for Rust ${{ matrix.toolchain }}${{ matrix.experimental && ' (experimental)' || '' }} on ${{ matrix.os }}${{ matrix.ignore-lock && ' without Cargo.lock' || '' }}${{ matrix.all-features && ' with all features' || '' }}
@@ -140,7 +140,7 @@ jobs:
         uses: clechasseur/rs-cargo@v2
         with:
           command: build
-          args: --workspace ${{ matrix.all-features && '--all-features' || '' }} --release
+          args: --workspace --all-targets ${{ matrix.all-features && '--all-features' || '' }} --release
 
   tests:
     name: Tests for Rust ${{ matrix.toolchain }}${{ matrix.experimental && ' (experimental)' || '' }} on ${{ matrix.os }}${{ matrix.ignore-lock && ' without Cargo.lock' || '' }}${{ matrix.all-features && ' with all features' || '' }}
