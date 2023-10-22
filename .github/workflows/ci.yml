@@ -85,6 +85,12 @@ jobs:
           cargo --version --verbose
           rustc --version
 
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: all-features-${{ matrix.all-features }}-msrv-cargo-files-${{ hashFiles('**/Cargo.*.msrv') }}
+          cache-targets: false
+
       - name: Check if we need to install MSRV cargo files
         id: check_msrv_cargo_files
         uses: andstor/file-existence-action@v2
@@ -136,6 +142,13 @@ jobs:
           cargo --version --verbose
           rustc --version
 
+      - name: Rust Cache
+        if: ${{ !matrix.experimental }}
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ignore-lock-${{ matrix.ignore-lock }}-all-features-${{ matrix.all-features }}
+          cache-targets: false
+
       - name: Run checks
         uses: clechasseur/rs-cargo@v2
         with:
@@ -162,6 +175,11 @@ jobs:
         uses: taiki-e/install-action@v2
         with:
           tool: cargo-tarpaulin
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          cache-targets: false
 
       - name: Run cargo-tarpaulin
         uses: clechasseur/rs-cargo@v2
@@ -207,6 +225,11 @@ jobs:
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          cache-targets: false
 
       - name: Perform publish dry-run
         uses: clechasseur/rs-cargo@v2
