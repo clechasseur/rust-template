@@ -14,5 +14,6 @@ This is a simple template repository for Rust projects that includes some defaul
 4. Adjust workflows as required
    * In particular, in order to have code coverage work, setup your project on [codecov.io](https://about.codecov.io/) and create a `CODECOV_TOKEN` secret for your repository's actions
 5. Adjust/add/remove status badges in this README
-6. ???
-7. Profit!
+6. Adjust links in [CONTRIBUTING.md](./CONTRIBUTING.md), [DEVELOPMENT.md](./DEVELOPMENT.md) and [SECURITY.md](./SECURITY.md)
+7. ???
+8. Profit!
