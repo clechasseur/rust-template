@@ -14,7 +14,7 @@ fn main() {
 mod tests {
     #[test]
     fn test_main_one() {
-        let foo = "foo";
-        assert!(!foo.is_empty());
+        let hello_str = "hello";
+        assert!(!hello_str.is_empty());
     }
 }

@@ -8,7 +8,7 @@ fn main() {
 mod tests {
     #[test]
     fn test_bin_1_one() {
-        let foo = "foo";
-        assert!(!foo.is_empty());
+        let hello_str = "hello";
+        assert!(!hello_str.is_empty());
     }
 }
