@@ -2,6 +2,6 @@ use rust_template_output::hello;
 
 #[test]
 fn test_integration_one() {
-    let foo = hello();
-    assert!(!foo.is_empty());
+    let hello_str = hello();
+    assert!(!hello_str.is_empty());
 }
