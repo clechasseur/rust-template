@@ -60,7 +60,7 @@ jobs:
           args: --all
 
   build-msrv:
-    name: Release build for minimum Rust version ${{ matrix.toolchain }} on ${{ matrix.os }}${{ matrix.all-features && ' with all features' || '' }}
+    name: MSRV build for Rust ${{ matrix.toolchain }} on ${{ matrix.os }}${{ matrix.all-features && ' with all features' || '' }}
     strategy:
       fail-fast: false
       matrix:
