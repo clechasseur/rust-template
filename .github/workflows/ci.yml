@@ -88,8 +88,8 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
         with:
+          prefix-key: v1-rust
           key: all-features-${{ matrix.all-features }}-msrv-cargo-files-${{ hashFiles('**/Cargo.*.msrv') }}
-          cache-targets: false
 
       - name: Check if we need to install MSRV cargo files
         id: check_msrv_cargo_files
@@ -146,8 +146,8 @@ jobs:
         if: ${{ !matrix.experimental }}
         uses: Swatinem/rust-cache@v2
         with:
+          prefix-key: v1-rust
           key: ignore-lock-${{ matrix.ignore-lock }}-all-features-${{ matrix.all-features }}
-          cache-targets: false
 
       - name: Run checks
         uses: clechasseur/rs-cargo@v2
