@@ -197,3 +197,19 @@ jobs:
         with:
           command: doc
           args: --workspace --all-features
+
+  publish-dry-run:
+    name: Publish dry-run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Perform publish dry-run
+        uses: clechasseur/rs-cargo@v2
+        with:
+          command: publish
+          args: --dry-run
