@@ -36,6 +36,6 @@ jobs:
 
       - name: Run security audit for MSRV manifest
         if: ${{ steps.check_msrv_manifest.outputs.files_exists == 'true' }}
-        uses: rustsec/audit-check@dd51754d4e59da7395a4cd9b593f0ff2d61a9b95
+        uses: clechasseur/rustsec-audit-check@b5ade62a8d38826bb50ca4b8b9bc2a8a97f0d44d
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
