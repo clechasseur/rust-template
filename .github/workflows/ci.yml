@@ -77,16 +77,16 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
           cache: false
 
-      - name: Install just and cargo-minimal-versions
-        uses: taiki-e/install-action@0dffe805566eb5f21aa682f9a43f6fbac7282dbe
-        with:
-          tool: just,cargo-hack,cargo-minimal-versions
-
       - name: Rust Cache
         uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84
         with:
           prefix-key: v4-rust
           key: all-features-${{ matrix.all-features }}-msrv-cargo-files-${{ hashFiles('**/Cargo.*.msrv') }}
+
+      - name: Install just, cargo-hack and cargo-minimal-versions
+        uses: taiki-e/install-action@0dffe805566eb5f21aa682f9a43f6fbac7282dbe
+        with:
+          tool: just,cargo-hack,cargo-minimal-versions
 
       - name: Run checks using cargo-minimal-versions
         run: just all_features=${{ matrix.all-features }} check-minimal
@@ -122,17 +122,17 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
           cache: false
 
-      - name: Install just
-        uses: taiki-e/install-action@0dffe805566eb5f21aa682f9a43f6fbac7282dbe
-        with:
-          tool: just
-
       - name: Rust Cache
         if: ${{ !matrix.experimental }}
         uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84
         with:
           prefix-key: v1-rust
           key: ignore-lock-${{ matrix.ignore-lock }}-all-features-${{ matrix.all-features }}
+
+      - name: Install just
+        uses: taiki-e/install-action@0dffe805566eb5f21aa682f9a43f6fbac7282dbe
+        with:
+          tool: just
 
       - name: Run checks
         run: just all_features=${{ matrix.all-features }} check
@@ -153,15 +153,15 @@ jobs:
           toolchain: stable
           cache: false
 
-      - name: Install cargo-tarpaulin
-        uses: taiki-e/install-action@0dffe805566eb5f21aa682f9a43f6fbac7282dbe
-        with:
-          tool: cargo-tarpaulin
-
       - name: Rust Cache
         uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84
         with:
           cache-targets: false
+
+      - name: Install cargo-tarpaulin
+        uses: taiki-e/install-action@0dffe805566eb5f21aa682f9a43f6fbac7282dbe
+        with:
+          tool: cargo-tarpaulin
 
       - name: Run cargo-tarpaulin
         uses: clechasseur/rs-cargo@7f70e375af32a065d31856c21fd53b638d38e057
@@ -204,16 +204,16 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
           cache: false
 
-      - name: Install just
-        uses: taiki-e/install-action@0dffe805566eb5f21aa682f9a43f6fbac7282dbe
-        with:
-          tool: just
-
       - name: Rust Cache
         if: ${{ !matrix.experimental }}
         uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84
         with:
           cache-targets: false
+
+      - name: Install just
+        uses: taiki-e/install-action@0dffe805566eb5f21aa682f9a43f6fbac7282dbe
+        with:
+          tool: just
 
       - name: Generate doc using rustdoc
         run: just doc
@@ -231,15 +231,15 @@ jobs:
           toolchain: stable
           cache: false
 
-      - name: Install just
-        uses: taiki-e/install-action@0dffe805566eb5f21aa682f9a43f6fbac7282dbe
-        with:
-          tool: just
-
       - name: Rust Cache
         uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84
         with:
           cache-targets: false
+
+      - name: Install just
+        uses: taiki-e/install-action@0dffe805566eb5f21aa682f9a43f6fbac7282dbe
+        with:
+          tool: just
 
       - name: Perform publish dry-run
         uses: clechasseur/rs-cargo@7f70e375af32a065d31856c21fd53b638d38e057
