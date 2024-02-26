@@ -164,7 +164,7 @@ jobs:
           tool: cargo-tarpaulin
 
       - name: Run cargo-tarpaulin
-        uses: clechasseur/rs-cargo@7f70e375af32a065d31856c21fd53b638d38e057
+        uses: clechasseur/rs-cargo@801899018a9a4558d01dc74fe3943a6e2ae0f98c
         with:
           command: tarpaulin
 
@@ -242,7 +242,7 @@ jobs:
           tool: just
 
       - name: Perform publish dry-run
-        uses: clechasseur/rs-cargo@7f70e375af32a065d31856c21fd53b638d38e057
+        uses: clechasseur/rs-cargo@801899018a9a4558d01dc74fe3943a6e2ae0f98c
         with:
           command: publish
           args: --dry-run
