@@ -80,13 +80,13 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84
         with:
-          prefix-key: v4-rust
-          key: all-features-${{ matrix.all-features }}-msrv-cargo-files-${{ hashFiles('**/Cargo.*.msrv') }}
+          prefix-key: v5-rust
+          key: all-features-${{ matrix.all-features }}-msrv-pins-files-${{ hashFiles('**/msrv-pins.toml') }}
 
-      - name: Install just, cargo-hack and cargo-minimal-versions
+      - name: Install required tools
         uses: taiki-e/install-action@28b5a55da2f568d1d1e3f8d5ea6e7103685abc6a
         with:
-          tool: just,cargo-hack,cargo-minimal-versions
+          tool: just,cargo-hack,cargo-minimal-versions,cargo-msrv-prep
 
       - name: Run checks using cargo-minimal-versions
         run: just all_features=${{ matrix.all-features }} check-minimal
@@ -141,6 +141,9 @@ jobs:
         run: just all_features=${{ matrix.all-features }} test
 
   tarpaulin:
+    # Note: there seems to be an issue in `cargo-tarpaulin` when using Rust 1.75.0 or later - it reports some missing line coverage.
+    # I've entered an issue: https://github.com/xd009642/tarpaulin/issues/1438
+    # In the meantime, let's pin the Rust version used for code coverage to 1.74.1 until we know what's happening.
     name: Code coverage
     runs-on: ubuntu-latest
     steps:
@@ -150,7 +153,7 @@ jobs:
       - name: Install Rust
         uses: actions-rust-lang/setup-rust-toolchain@b113a30d27a8e59c969077c0a0168cc13dab5ffc
         with:
-          toolchain: stable
+          toolchain: 1.74.1
           cache: false
 
       - name: Rust Cache
