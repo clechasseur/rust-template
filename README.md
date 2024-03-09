@@ -12,7 +12,8 @@ This is a simple template repository for Rust projects that includes some defaul
    OR<br/>
    Run `cargo new <project>` from the repository root to create a new Rust project, then create a root `Cargo.toml` to setup a [workspace](https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html)
 4. Adjust workflows as required
-   * In particular, in order to have code coverage work, setup your project on [codecov.io](https://about.codecov.io/) and create a `CODECOV_TOKEN` secret for your repository's actions
+   * In particular, in order to have code coverage work, set up your project on [codecov.io](https://about.codecov.io/) and create a `CODECOV_TOKEN` secret for your repository's actions
+     * Also make sure you create a Dependabot secret for the token - see [this warning](https://github.com/codecov/codecov-action?tab=readme-ov-file#dependabot)
 5. Adjust/add/remove status badges in this README
 6. Adjust links in [CONTRIBUTING.md](./CONTRIBUTING.md), [DEVELOPMENT.md](./DEVELOPMENT.md), [SECURITY.md](./SECURITY.md) and [PULL_REQUEST_TEMPLATE.md](./.github/PULL_REQUEST_TEMPLATE.md)
 7. ???
