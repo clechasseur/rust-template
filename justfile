@@ -89,11 +89,11 @@ _check-minimal-only:
 
 # Run `cargo msrv` with `cargo minimal-versions check`
 msrv-minimal: (prep "--manifest-backup-suffix .msrv-prep.outer.bak") && (unprep "--manifest-backup-suffix .msrv-prep.outer.bak")
-    {{cargo}} msrv -- just _check-minimal-only
+    {{cargo}} msrv -- just all_features="{{all_features}}" message_format="{{message_format}}" target_tuple="{{target_tuple}}" _check-minimal-only
 
 # Run `cargo msrv` with `cargo check`
 msrv *extra_args:
-    {{cargo}} msrv -- just check {{extra_args}}
+    {{cargo}} msrv -- just all_features="{{all_features}}" all_targets="{{all_targets}}" message_format="{{message_format}}" target_tuple="{{target_tuple}}" check {{extra_args}}
 
 # Perform `cargo publish` dry-run
 test-package *extra_args:
