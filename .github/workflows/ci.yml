@@ -25,7 +25,6 @@ jobs:
         with:
           toolchain: stable
           components: clippy
-          cache: false
 
       - name: Run clippy
         uses: clechasseur/rs-clippy-check@d76e9da3cd0e64868fdc27e2277268190cd3af59
@@ -238,11 +237,6 @@ jobs:
         uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84
         with:
           cache-targets: false
-
-      - name: Install just
-        uses: taiki-e/install-action@28b5a55da2f568d1d1e3f8d5ea6e7103685abc6a
-        with:
-          tool: just
 
       - name: Perform publish dry-run
         uses: clechasseur/rs-cargo@801899018a9a4558d01dc74fe3943a6e2ae0f98c
