@@ -58,7 +58,7 @@ jobs:
         if: ${{ matrix.link-self-contained }}
 
       - name: Build binaries and upload to GitHub release
-        uses: taiki-e/upload-rust-binary-action@6eae9d714e13744ede2258c97f4390dd0d88331e
+        uses: taiki-e/upload-rust-binary-action@01cb791d87a54d260100e35916d83c4030ee58b4
         with:
           bin: YOUR-BINS-HERE # TODO replace this with a comma-separated list of bins to publish
           token: ${{ secrets.GITHUB_TOKEN }}
