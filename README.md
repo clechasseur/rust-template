@@ -88,19 +88,10 @@ There are also places where you will need to edit the files depending on your pr
 
 If you don't need one of the workflow (such as `release.yml` if your project does not publish binaries), you can simply delete the file.
 
-### Dependabot
+### Renovate
 
-The template includes a [Dependabot config file](./.github/dependabot.yml) that instructs Dependabot to check your project's dependencies for updates.
-By default, Rust dependencies will be checked daily and GitHub actions will be checked weekly.
-You can modify the file to adapt it to your needs (or delete it if you don't use Dependabot).
-
-### `build.rs`
-
-The template include a Rust build script (see the [`build.rs`](./build.rs) file).
-This script will be compiled and executed before your crate's code is built and allows you to set some arguments or configuration values.
-For more details, see the appropriate [Cargo book section](https://doc.rust-lang.org/cargo/reference/build-scripts.html).
-
-If you do not need a build script, you can simply delete the file.
+The template includes a [Renovate config file](./renovate.json) that can be used with the [Renovate bot](https://github.com/marketplace/renovate) to check your project's dependencies for updates.
+By default, the config file points to a [shared config preset](https://github.com/clechasseur/renovate-config/blob/main/renovate.json), but you can change it for your needs if required (or delete the file if you don't use Renovate).
 
 ### `rustfmt`
 
