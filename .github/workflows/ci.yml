@@ -106,7 +106,7 @@ jobs:
           - toolchain: nightly
             experimental: true
         exclude:
-          - toolchain: 1.68.2 # TODO: change this version to match the minimum supported Rust version specified above
+          - toolchain: 1.75.0
             ignore-lock: true
     runs-on: ${{ matrix.os }}-latest
     continue-on-error: ${{ matrix.experimental }}
