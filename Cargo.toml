@@ -9,26 +9,26 @@ rust-version = "1.70.0"
 test_feature_1 = []
 
 [dependencies]
-bytes = "1.7.1"
-derive_builder = "0.20.1"
-either = "1.13.0"
-futures = "0.3.30"
+bytes = "1.10.1"
+derive_builder = "0.20.2"
+either = "1.15.0"
+futures = "0.3.31"
 mockall_double = "0.3.1"
 paste = "1.0.15"
-reqwest = { version = "0.12.7", features = ["json", "stream"] }
-serde = { version = "1.0.210", features = ["derive"] }
-serde_json = "1.0.128"
+reqwest = { version = "0.12.12", features = ["json", "stream"] }
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.140"
 strum = { version = "0.26.3", features = ["derive"] }
-thiserror = "1.0.63"
-tokio = { version = "1.40.0", features = ["full"] }
+thiserror = "1.0.69"
+tokio = { version = "1.44.0", features = ["full"] }
 
 [dev-dependencies]
-anyhow = "1.0.89"
+anyhow = "1.0.97"
 assert_matches = "1.5.0"
 itertools = "0.13.0"
-mockall = "0.13.0"
-serial_test = "3.1.1"
-wiremock = "0.6.2"
+mockall = "0.13.1"
+serial_test = "3.2.0"
+wiremock = "0.6.3"
 wiremock_logical_matchers = "0.6.0"
 
 [build-dependencies]
