@@ -59,13 +59,13 @@ _run-with-test-reqs *cmd: _before-test && _after-test
     {{cmd}}
 
 # Run an executable
-run bin_name *extra_args: (_run-it "--bin" bin_name extra_args)
+run bin_name="" *extra_args: (_run-it "--bin" bin_name extra_args)
 
 # Run an example
 teach example_name *extra_args: (_run-it "--example" example_name extra_args)
 
 _run-it run_param run_param_value *extra_args:
-    {{cargo}} run {{package_only_flag}} {{all_features_flag}} {{target_tuple_flag}} {{release_flag}} {{run_param}} {{run_param_value}} {{ if extra_args != '' { '-- ' + extra_args } else { '' } }}
+    {{cargo}} run {{package_only_flag}} {{all_features_flag}} {{target_tuple_flag}} {{release_flag}} {{ if run_param_value != '' { run_param + ' ' + run_param_value } else { '' } }} {{ if extra_args != '' { '-- ' + extra_args } else { '' } }}
 
 # Run `cargo hack clippy` for the feature powerset and rustfmt
 tidy: clippy fmt
