@@ -1,8 +1,7 @@
 name: CI
 
 on:
-  # TODO re-enable once project is set up properly
-  #push:
+  push:
   workflow_dispatch:
 
 env:
@@ -62,7 +61,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ ubuntu-24.04, macos-14, windows-2022 ]
-        toolchain: [ 1.60.0 ] # TODO: change for your minimum supported Rust version
+        toolchain: [ 1.79.0 ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
@@ -96,7 +95,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        toolchain: [ 1.68.2, stable, beta, nightly ] # TODO: change 1.68.2 for your minimum supported Rust version
+        toolchain: [ 1.81.0, stable, beta, nightly ]
         os: [ ubuntu-24.04, macos-14, windows-2022 ]
         ignore-lock: [ false, true ]
         include:
@@ -106,7 +105,7 @@ jobs:
           - toolchain: nightly
             experimental: true
         exclude:
-          - toolchain: 1.68.2 # TODO: change this version to match the minimum supported Rust version specified above
+          - toolchain: 1.81.0
             ignore-lock: true
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
