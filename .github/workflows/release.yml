@@ -65,7 +65,7 @@ jobs:
         with:
           bin: YOUR-BINS-HERE # TODO replace this with a comma-separated list of bins to publish
           token: ${{ secrets.GITHUB_TOKEN }}
-          archive: $bin-$target-$tag # TODO if you have mulitiple bins, replace $bin here
+          archive: $bin-$target-$tag # TODO if you have multiple bins, replace $bin here
           target: ${{ matrix.arch }}-${{ matrix.platform }}
           include: LICENSE,README.md
           leading-dir: true
