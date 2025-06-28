@@ -11,12 +11,12 @@ fn main() {
 
     let v: Vec<_> = iterate_maybe(Some("Hello, World!")).collect();
     if let Some(&s) = v.first() {
-        println!("{}", s);
+        println!("{s}");
     }
 
     let v: Vec<&str> = iterate_maybe(None).collect();
     if let Some(&s) = v.first() {
-        println!("{}", s);
+        println!("{s}");
     }
 }
 
