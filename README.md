@@ -12,8 +12,6 @@ This is a simple template repository for Rust projects that includes some defaul
    OR<br/>
    Run `cargo new <project>` from the repository root to create a new Rust project, then create a root `Cargo.toml` to setup a [workspace](https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html)
 4. Adjust workflows as required
-   * In particular, in order to have code coverage work, set up your project on [codecov.io](https://about.codecov.io/) and create a `CODECOV_TOKEN` secret for your repository's actions
-     * Also make sure you create a Dependabot secret for the token - see [this warning](https://github.com/codecov/codecov-action?tab=readme-ov-file#dependabot)
 5. Adjust/add/remove status badges in this README
 6. Adjust links in [CONTRIBUTING.md](./CONTRIBUTING.md), [DEVELOPMENT.md](./DEVELOPMENT.md), [SECURITY.md](./SECURITY.md) and [PULL_REQUEST_TEMPLATE.md](./.github/PULL_REQUEST_TEMPLATE.md)
 7. ???
@@ -30,7 +28,7 @@ In addition to a stable Rust toolchain, the template uses the following tools:
 
 * A Nightly Rust toolchain
 * [`just`](https://github.com/casey/just) (command runner, a `make` of sorts)
-* [`cargo-tarpaulin`](https://github.com/xd009642/tarpaulin) (code coverage tool)
+* [`cargo-llvm-cov`](https://github.com/taiki-e/cargo-llvm-cov) (code coverage tool)
 * [`cargo-hack`](https://github.com/taiki-e/cargo-hack) (CI helper, used by other tools)
 * [`cargo-minimal-versions`](https://github.com/taiki-e/cargo-minimal-versions) (MSRV helper tool)
 * [`cargo-msrv-prep`](https://github.com/clechasseur/msrv-prep) (MSRV helper tool)
@@ -45,20 +43,20 @@ This makes it easier to run common commands without having to remember any proje
 Running `just` without argument will print the list of available recipes.
 The following table lists the most interesting ones.
 
-| Command | Purpose |
-|---------|---------|
-| `just tidy` | Run `clippy` and `rustfmt` on the project's code<sup>1</sup> |
-| `just check` | Run `cargo check` on all workspace projects |
-| `just build` | Run `cargo build` on all workspace projects |
-| `just test` | Run `cargo test` for all tests in workspace |
-| `just tarpaulin` | Run `cargo tarpaulin` to execute tests with code coverage (see below) |
-| `just update` | Run `cargo update` |
-| `just doc` | Generate documentation with `rustdoc`; when run locally, opens the resulting doc when done (with `--open`) |
-| `just doc-coverage` | Produce a doc coverage report (an experimental `rustdoc` feature)<sup>1</sup> |
-| `just msrv` | Determine the entire project's MSRV using `cargo-msrv` (see below) |
-| `just msrv-minimal` | Determine the MSRV of `lib` and `bin` crates only using `cargo-msrv` (see below) |
-| `just check-minimal` | Validate the minimal MSRV determined with `just msrv-minimal` (see below) |
-| `just test-package` | Run `cargo publish --dry-run` to test package publication |
+| Command              | Purpose                                                                                                    |
+|----------------------|------------------------------------------------------------------------------------------------------------|
+| `just tidy`          | Run `clippy` and `rustfmt` on the project's code<sup>1</sup>                                               |
+| `just check`         | Run `cargo check` on all workspace projects                                                                |
+| `just build`         | Run `cargo build` on all workspace projects                                                                |
+| `just test`          | Run `cargo test` for all tests in workspace                                                                |
+| `just llvm-cov`      | Run `cargo llvm-cov` to execute tests with code coverage (see below)<sup>1</sup>                           |
+| `just update`        | Run `cargo update`                                                                                         |
+| `just doc`           | Generate documentation with `rustdoc`; when run locally, opens the resulting doc when done (with `--open`) |
+| `just doc-coverage`  | Produce a doc coverage report (an experimental `rustdoc` feature)<sup>1</sup>                              |
+| `just msrv`          | Determine the MSRV of `lib` and `bin` crates only using `cargo-msrv` (see below)                           |
+| `just msrv-full`     | Determine the entire project's MSRV using `cargo-msrv` (see below)                                         |
+| `just check-minimal` | Validate the minimal MSRV determined with `just msrv-minimal` (see below)                                  |
+| `just test-package`  | Run `cargo publish --dry-run` to test package publication                                                  |
 
 <sup>1</sup> : these commands use Nightly Rust.
 
@@ -76,11 +74,12 @@ There are other variables as well; check out the beginning of the [`justfile`](.
 
 The template includes some GitHub workflows to perform common CI/CD tasks.
 
-| File | Triggers on... | Purpose |
-|------|----------------|---------|
-| [`audit-check.yml`](./.github/workflows/audit-check.yml) | `push`, `schedule` (every day) | Run security audits on the project's dependencies using [`cargo-audit`](https://rustsec.org/) |
-| [`ci.yml`](./.github/workflows/ci.yml) | `push` | All CI-related tasks: linting, running tests, checking MSRV, etc. |
-| [`release.yml`](./.github/workflows/release.yml) | `release` (`created` only) | Build release binaries and attach them to a GitHub release |
+| File                                                     | Triggers on...                                             | Purpose                                                                                       |
+|----------------------------------------------------------|------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| [`audit-check.yml`](./.github/workflows/audit-check.yml) | `push` (to `main`), `pull_request`, `schedule` (every day) | Run security audits on the project's dependencies using [`cargo-audit`](https://rustsec.org/) |
+| [`ci.yml`](./.github/workflows/ci.yml)                   | `push` (to `main`), `pull_request`                         | All CI-related tasks: linting, running tests, checking MSRV, etc.                             |
+| [`publish.yml`](./.github/workflows/publish.yml)         | `push` (a version tag)                                     | Publishes workspace crates using `cargo publish`                                              |
+| [`release.yml`](./.github/workflows/release.yml)         | `release` (`created` only)                                 | Build release binaries and attach them to a GitHub release                                    |
 
 By default, workflows are disabled (except for manual triggering).
 To enable them, edit the corresponding file to uncomment the appropriate event at the top of the file.
@@ -113,12 +112,11 @@ If you do not use `rustfmt`, you can simply delete the config file.
 
 ### Code coverage
 
-The template includes support for running tests with coverage using [`cargo-tarpaulin`](https://github.com/xd009642/tarpaulin).
-The tool uses the [`tarpaulin.toml`](./tarpaulin.toml) file to read configuration values; you can edit the file to adapt it to your needs as required.
+The template includes support for running tests with coverage using [`cargo-llvm-cov`](https://github.com/taiki-e/cargo-llvm-cov).
 It's possible to run tests with coverage locally using
 
 ```sh
-just tarpaulin
+just llvm-cov
 ```
 
 The [`ci.yml`](./.github/workflows/ci.yml) workflow also includes support for uploading coverage results to [codecov.io](https://codecov.io/).
@@ -140,7 +138,7 @@ In order to determine the minimal Rust version needed to build your crate from a
 If you installed all required tools, this can be determined by running
 
 ```sh
-just msrv-minimal
+just msrv
 ```
 
 This Rust version can then be configured in the CI workflow (see [`ci.yml`](./.github/workflows/ci.yml)'s `msrv-check` job).
@@ -150,7 +148,7 @@ This Rust version can then be configured in the CI workflow (see [`ci.yml`](./.g
 In order to determine the minimal Rust version that can be used to build the project _itself_ (including any tests, examples, etc.), you can use
 
 ```sh
-just msrv
+just msrv-full
 ```
 
 This Rust version can then be configured in the CI workflow (see [`ci.yml`](./.github/workflows/ci.yml)'s `build` job).
