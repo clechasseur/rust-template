@@ -1,9 +1,9 @@
 [package]
 name = "rust-template-output"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 default-run = "rust-template-output"
-rust-version = "1.70.0"
+rust-version = "1.85.1"
 
 [features]
 test_feature_1 = []
