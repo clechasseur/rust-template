@@ -21,9 +21,9 @@ jobs:
             platform: apple-darwin
           - os: ubuntu-24.04
           - platform: apple-darwin
-            os: macos-14
+            os: macos-15
           - platform: pc-windows-msvc
-            os: windows-2022
+            os: windows-2025
           - crt-static: false
           - link-self-contained: false
           - platform: pc-windows-msvc
