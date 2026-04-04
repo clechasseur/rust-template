@@ -30,8 +30,19 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
-          prefix-key: v2-rust
+          prefix-key: v3-rust
           cache-on-failure: true
+
+      - name: Setup cargo-binstall
+        uses: cargo-bins/cargo-binstall@v1.17.9
+        with:
+          version: v1.17.9
+
+      - name: Install cargo-hack
+        uses: clechasseur/rs-cargo@v5.0.3
+        with:
+          command: binstall
+          args: -y cargo-hack@0.6.44
 
       - name: Run clippy
         uses: clechasseur/rs-clippy-check@v6.0.2
@@ -80,14 +91,20 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
-          prefix-key: v10-rust
+          prefix-key: v11-rust
           key: msrv-pins-files-${{ hashFiles('**/msrv-pins.toml') }}
           cache-on-failure: true
 
-      - name: Install required tools
-        uses: taiki-e/install-action@d858f8113943481093e02986a7586a4819a3bfd6 # v2.71.2
+      - name: Setup cargo-binstall
+        uses: cargo-bins/cargo-binstall@v1.17.9
         with:
-          tool: just@1.46.0,cargo-hack@0.6.43,cargo-minimal-versions@0.1.36,cargo-msrv-prep@2.1.1
+          version: v1.17.9
+
+      - name: Install required tools
+        uses: clechasseur/rs-cargo@v5.0.3
+        with:
+          command: binstall
+          args: -y just@1.48.1 cargo-hack@0.6.44 cargo-minimal-versions@0.1.37 cargo-msrv-prep@2.1.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -114,13 +131,19 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
-          prefix-key: v4-rust
+          prefix-key: v5-rust
           cache-on-failure: true
 
-      - name: Install required tools
-        uses: taiki-e/install-action@d858f8113943481093e02986a7586a4819a3bfd6 # v2.71.2
+      - name: Setup cargo-binstall
+        uses: cargo-bins/cargo-binstall@v1.17.9
         with:
-          tool: just@1.46.0,cargo-hack@0.6.43
+          version: v1.17.9
+
+      - name: Install required tools
+        uses: clechasseur/rs-cargo@v5.0.3
+        with:
+          command: binstall
+          args: -y just@1.48.1 cargo-hack@0.6.44
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -143,10 +166,22 @@ jobs:
           toolchain: nightly
           cache: false
 
-      - name: Install required tools
-        uses: taiki-e/install-action@d858f8113943481093e02986a7586a4819a3bfd6 # v2.71.2
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
-          tool: just@1.46.0,cargo-llvm-cov@0.6.16
+          cache-targets: false
+          cache-on-failure: true
+
+      - name: Setup cargo-binstall
+        uses: cargo-bins/cargo-binstall@v1.17.9
+        with:
+          version: v1.17.9
+
+      - name: Install required tools
+        uses: clechasseur/rs-cargo@v5.0.3
+        with:
+          command: binstall
+          args: -y just@1.48.1 cargo-llvm-cov@0.8.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -181,10 +216,22 @@ jobs:
           toolchain: nightly
           cache: false
 
-      - name: Install just
-        uses: taiki-e/install-action@d858f8113943481093e02986a7586a4819a3bfd6 # v2.71.2
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
-          tool: just@1.46.0
+          cache-targets: false
+          cache-on-failure: true
+
+      - name: Setup cargo-binstall
+        uses: cargo-bins/cargo-binstall@v1.17.9
+        with:
+          version: v1.17.9
+
+      - name: Install just
+        uses: clechasseur/rs-cargo@v5.0.3
+        with:
+          command: binstall
+          args: -y just@1.48.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
